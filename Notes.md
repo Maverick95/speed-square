@@ -333,6 +333,148 @@ having a key in their inventory.
 
 Now I'm getting confused. What is a Node, if not a State?
 
+A Node is up to the User to define.
+This is an AID, not a Rulebook. At some point, the User has to define what the Strat looks like.
+Node are pretty subjective really.
+They're a way of the User saying "You've reached a certain point".
+But this can be anything. So it's best you leave it open to definition by the User.
+
+Question then. Are State Changes defined entirely by movement along Edges?
+
+Last major thing I want to talk over. Then I think you should actually begin by mapping out some of the
+games you've played. To see if this works or not. Or anything important that comes up that you've forgotten.
+
+I want to think about how State Changes and Edges deal with PROBABILITIES.
+
+Ahem. This may just be a thought-dump.
+
+It is a little close-minded about the nature of speedrunning to just assign a fixed time to an edge.
+Times vary. The User's performance varies. RNG means a game can vary (sometimes quite severely,
+for example, in Thief 2, Level 5, Eavesdropping, the key is placed in a random location
+within the cathedral).
+
+How can you factor this in?
+
+Well, you can introduce the idea of a Branching Edge.
+
+This is where an Edge effectively splits in the middle. There are different paths and State Changes that can
+occur.
+Why do Edges split in the middle? Why can't they be separate Edges?
+The idea you're encapsulating is, the Edges are GROUPED in some way. The actual Edge the User chooses
+is random at the point they occupy the Node.
+Once they occupy the Node, they are forced to move on based on a random choice.
+The choice MUST be entirely random. Every Edge leading off from this Node MUST have a Probability assigned.
+Or calculated. e.g. you could record the # times each path happened in a game, and the software calculates it for you.
+The point is, YOU CANNOT CHOOSE A PATH. You can choose a SUBSEQUENT path once you reach a non-probabilistic Node again.
+
+Maybe instead of grouping Edges, a Node should be defined as Probabilistic. i.e. the path leading from it is random.
+The different Edges can go to different Nodes, or the same Node, with different State Changes. Whatever you define.
+
+There are a couple of other key concepts regarding Probability.
+
+One thing to note. There MUST be a Path that exists from Node 0 to Node X.
+This includes Probabilistic Nodes.
+
+DEATH. How do you express Death in a speed-run?
+
+Well, Death means your character dies. Duh.
+
+But Death is not an end, it is just a transition. So deep.
+
+But seriously, dying in a game means you either go back to Node 0, or another Node, and your State is potentially reset
+to a previous value. There is potentially a problem in here, when you mentioned about Edges defining State Changes.
+I think there is definitely the concept in here of a State Reset, this is where Dimension(s) of your State are reset to the
+Value they previously were, WHEN YOU WERE AT THAT NODE.
+So in computations, recording State history will be important.
+
+I think dying may turn out to be a more difficult concept than you think.
+Immediate concerns are -
+a) Death can happen in many places, for many reasons. Low health / player error / etc.
+This implies that you need to know, at a given moment in time, what the conditions are for death,
+and what will happen if you die.
+This could get difficult to setup.
+But realistically, it needs thinking about.
+Optimizing a speedrun depends on health management.
+I like the idea of a Node / State Reset, because it stops you having to constantly draw Edges to define what
+Death means.
+Perhaps some Nodes could be classed as Reset Nodes?
+
+Next big concept. The idea of Probability, Node transitions, and endless loops.
+
+Endless loops are definitely possible. Resident Evil is a perfect example of this.
+You can endlessly go through a door to one room, turn around and go back to the previous room,
+repeat ad infinitum.
+
+A User doesn't define definite Paths, they lay out potential Paths using the software.
+But endless loops are possible. In Resident Evil, there are only a limited number of doors you will go through once.
+So endless loops are possible everywhere.
+
+How to detect / counter these?
+
+You have to cut if off before a complete loop has executed. The software needs to cut the last step off as an invalid Path.
+Ouch. Okay then.
+
+Is the criteria, that the State has not changed in any way?
+
+Oof, okay. Is this an actual criteria?
+
+First attempt : a Path cannot visit the same Node twice with the exact same State.
+Heuristically it makes sense.
+Can you dispute it?
+
+It may be down to how the User defines the Plan and the Nodes.
+
+Maybe in computation, you should also show the invalid Paths for this reason?
+No that would be stupid, literally everything could flash red as an invalid Path.
+There would literally be thousands.
+
+Oh yeah, you can dispute it. With a Death and a return to a previous Node, with the same State.
+
+This is a strange one. I did want to include the chances of dying and returning, because it affects where players should Save,
+which is an action that affects time and State, and therefore should be accounted for.
+But it defies this rule.
+Oh wait, hang on. Ohhhh I get it!
+
+This is okay, because you would be moving from a Probabilistic Node.
+Okay, okay, this makes sense.
+
+Second attempt : a Path cannot visit the same Node twice with the exact same State, if the Path has not encountered
+a Probabilistic Node in-betwween visiting the same Node.
+
+I'm still not massively happy about this. I think computationally, I may have to accept that circular paths
+and Deaths will be a tricky matter.  
+
+The last big idea isn't really a big idea once you accept the idea of Probability and Node Resets.
+But its still a bit of extra headspace for the User.
+Its the idea of State Changes and Times being probabilistic in nature.
+As a speedrunner, you never finish something in the same time.
+Times are not fixed, they will likely follow a certain distribution. Time is continuous, not fixed.
+Therefore it will follow some sort of distribution curve.
+
+It is also likely that State Changes won't be fixed.
+It must be noted, these are different from DISCRETE probabilistic elements based on paths / outcomes
+using Probabilistic Nodes.
+These are Distributed State Changes.
+Sometimes, you can lose more health in an encounter, you can use more ammo.
+Other factors are also probabilistic.
+
+Putting the whole thing together, this effectively turns the total Time of a Plan / Strat,
+from a fixed value, into a distribution.
+
+So, at this point, I don't know what to say next.
+
+If you put in all the data in this way, and looked at the final result... pfft.
+You run the risk of producing something that computes everything but tells you nothing.
+
+I'm not sure if making everything probabilistic is the right way to go.
+
+It's like... the non-probabilistic approach is fixed and non-helpful, but the total-probabilistic approach here seems
+sprawling and confusing.
+
+Calculating distributions will effectively be sums to infinity in any case with repetitive paths and deaths / Node Resets.
+
+
+
 
 
 
